@@ -1,0 +1,2 @@
+REPO_URL	https://github.com/mcast/cloudy-habitat
+GH_REPO_DIR	gitwk-github

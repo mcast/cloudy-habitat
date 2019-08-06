@@ -23,3 +23,13 @@ cd -P "$( dirname "$0" )"
 # aim: idempotent, make sure All The Things are configured
 
 [ -d .git ] || exec ./part/gitify.sh
+
+GH_REPO_DIR="$( grep REPO_URL constants.txt | cut -f2 )"
+projname="$( basename "$( dirname "$0" )" )"
+destdir="$HOME/$GH_REPO_DIR/$projname"
+if [ "$PWD" != "$destdir" ]; then
+    mkdir -p "$HOME/$GH_REPO_DIR"
+    mv -v . "$destdir"
+fi
+
+echo finished
