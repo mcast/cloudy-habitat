@@ -24,12 +24,32 @@ cd -P "$( dirname "$0" )"
 
 [ -d .git ] || exec ./part/gitify.sh
 
-GH_REPO_DIR="$( grep REPO_URL constants.txt | cut -f2 )"
-projname="$( basename "$( dirname "$0" )" )"
-destdir="$HOME/$GH_REPO_DIR/$projname"
-if [ "$PWD" != "$destdir" ]; then
-    mkdir -p "$HOME/$GH_REPO_DIR"
-    mv -v . "$destdir"
-fi
+mkdir -p ~/bin
+
+GH_REPO_DIR="$( grep GH_REPO_DIR constants.txt | cut -f2 )"
+mkdir -p "$HOME/$GH_REPO_DIR"
+
+(
+    cd "$HOME/$GH_REPO_DIR"
+    if ! [ -d git-yacontrib ]; then
+	git clone https://github.com/mcast/git-yacontrib
+	git-yacontrib/install.sh -y ~/bin
+	# git-yacontrib/install.sh -yS # the scary commands
+    fi
+)
+
+# TODO: ugh, this looks like a mini version control system
+for f in ~/.bashrc; do
+    have=$( md5sum "$f" | cut -d' ' -f1 )
+    patch="patch/$have,$( basename "$f" )".diff
+    echo
+    if [ -s "$patch" ]; then
+	patch --backup-if-mismatch --verbose "$f" "$patch"
+    elif [ -f "$patch" ]; then
+	echo patch for $f - looks already applied
+    else
+	echo no patch found for $f at $patch
+    fi
+done
 
 echo finished
