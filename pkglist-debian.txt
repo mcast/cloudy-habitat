@@ -1,0 +1,7 @@
+
+# NB: git being not git-core means older (2016?) Debians won't work
+git
+git-annex
+gitk
+git-gui
+

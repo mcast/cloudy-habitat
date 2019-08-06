@@ -1,3 +1,9 @@
 
 # emacs
 *~
+
+# project tmp
+tmp.checkout
+
+# project state
+sudo-ok
