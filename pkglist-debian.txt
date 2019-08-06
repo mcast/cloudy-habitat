@@ -5,3 +5,7 @@ git-annex
 gitk
 git-gui
 
+libyaml-perl
+
+dc
+units

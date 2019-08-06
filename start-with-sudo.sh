@@ -36,14 +36,17 @@ else
     fi
 fi
 
+_deb_style() {
+    set -x
+    sudo apt update
+    sudo apt install aptitude
+    sudo aptitude install $( grep -hvE '^#' "$@" )
+    set +x
+}
+
 case $( lsb_release -si || uname || echo unknown ) in
     Ubuntu|Debian)
-	# TODO: refine by lsb_release flavour and version?
-	set -x
-	sudo apt update
-	sudo apt install aptitude
-	sudo aptitude install $( grep -vE '^#' pkglist-debian.txt )
-	set +x
+	_deb_style pkglist-debian.txt pkglist-$( lsb_release -sc ).txt
 	;;
     *)
 	echo "don't know what to do on this platform"
