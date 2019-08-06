@@ -3,6 +3,9 @@
 
 ## Problem to solve
 
+Background: each time I log in to a freshly made computer of any sort I tend to end up make a "pet", even though I know it won't be many weeks before I have to dispose of it.
+Terminology comes from management of computer environments, where it is easier if they are treated as [cattle, not pets](https://devops.stackexchange.com/questions/653/what-is-the-definition-of-cattle-not-pets).
+
 1. I've created a new machine, usually virtual but less often on physical hardware
 2. I do things in / with / to this machine environment,
   * fetch and unpack the usual tools I have in my user account
@@ -30,3 +33,7 @@
 ## The plan - staying up to date
 
 ## The plan - moving out
+
+## Other implications...
+
+...on what this says for the way farm animals are treated in the prevailing society in which [this metaphor](https://devops.stackexchange.com/questions/653/what-is-the-definition-of-cattle-not-pets) arose...  is something for another day.
