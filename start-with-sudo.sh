@@ -20,8 +20,8 @@ esac
 
 cd -P "$( dirname "$0" )"
 
-if [ -f sudo-ok ] || [ -f sudo-failed ]; then
-    echo already marked with $PWD/sudo-* file
+if [ -f sudo-ok ]; then
+    echo already marked with $PWD/sudo-ok file
 else
     set -x
     pwd
@@ -30,32 +30,30 @@ else
 	set +x
     else
 	set +x
-	echo sudo failed, either
-	echo "  rm sudo-failed; $PWD/start-with-sudo.sh"
-	echo to try again or continue with
-	echo "  $PWD/start.sh"
+	echo sudo failed, try again or continue with
+	echo " $PWD/start.sh"
 	exit 1
     fi
 fi
 
+_deb_style() {
+    set -x
+    sudo apt update
+    sudo apt install aptitude
+    sudo aptitude install $( grep -hvE '^#' "$@" )
+    set +x
+}
 
-if [ -f sudo-ok ]; then
-
-    case $( lsb_release -si || uname || echo unknown ) in
-	Ubuntu|Debian)
-	    # TODO: refine by lsb_release flavour and version?
-	    set -x
-	    sudo apt update
-	    sudo apt install aptitude
-	    sudo aptitude install $( grep -vE '^#' pkglist-debian.txt )
-	    set +x
-	    ;;
-	*)
-	    echo "don't know what to do on this platform"
-	    exit 1
-	    ;;
-    esac
-fi
+case $( lsb_release -si || uname || echo unknown ) in
+    Ubuntu|Debian)
+	# TODO: refine by lsb_release flavour and version?
+	_deb_style pkglist-debian.txt pkglist-$( lsb_release -sc ).txt
+	;;
+    *)
+	echo "don't know what to do on this platform"
+	exit 1
+	;;
+esac
 
 echo
 echo proceed to next stage
