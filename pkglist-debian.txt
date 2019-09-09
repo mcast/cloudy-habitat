@@ -9,3 +9,6 @@ libyaml-perl
 
 dc
 units
+
+emacs
+emacs25-el-
