@@ -41,3 +41,13 @@ None.  Don't run it on your favourite pet!
 ## Other implications...
 
 ...on what this says for the way farm animals are treated in the prevailing society in which [this metaphor](https://devops.stackexchange.com/questions/653/what-is-the-definition-of-cattle-not-pets) arose...  is something for another day.
+
+# Notes
+## Need for setup
+* .gitconfig
+* dpkg list, initial state
+
+## Need for teardown
+* enumerate git repos, check all committed and pushed up-to-date
+* list cruft inside and outside git repos
+* dpkg list, differences from original install
