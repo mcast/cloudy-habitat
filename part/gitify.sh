@@ -6,13 +6,13 @@ fixup() {
     set -x
     rm -vf part/gitify.sh
     rm -rf tmp.checkout
-    git clone https://github.com/mcast/cloudy-habitat tmp.checkout
-    mv tmp.checkout/.git
+    git clone $( grep REPO_URL constants.txt | cut -f2 ) tmp.checkout
+    mv tmp.checkout/.git .
     git reset --hard HEAD
     rm -rf tmp.checkout
     set +x
+    echo re-running ./start.sh soon...
     sleep 3
-    echo re-running ./start.sh
     exec ./start.sh
 }
 

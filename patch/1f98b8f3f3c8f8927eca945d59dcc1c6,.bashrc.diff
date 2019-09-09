@@ -1,0 +1,11 @@
+--- .bashrc~	2019-08-06 14:18:28.891666023 +0100
++++ .bashrc	2019-08-06 15:48:42.493587944 +0100
+@@ -8,6 +8,8 @@
+       *) return;;
+ esac
+ 
++echo $PATH | grep -q ~/bin || PATH=~/bin:$PATH
++
+ # don't put duplicate lines or lines starting with space in the history.
+ # See bash(1) for more options
+ HISTCONTROL=ignoreboth

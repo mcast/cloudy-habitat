@@ -25,7 +25,7 @@ if [ -f sudo-ok ]; then
 else
     set -x
     pwd
-    if echo sudo ok; then
+    if sudo echo sudo ok; then
 	touch sudo-ok
 	set +x
     else
