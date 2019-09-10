@@ -52,4 +52,9 @@ for f in ~/.bashrc; do
     fi
 done
 
+if which docker >/dev/null && ping -c1 -l2 cgpbar.internal.sanger.ac.uk >/dev/null; then
+    # Internal machine, with docker
+    ./part/docker-wtsi-openstack.sh
+fi
+
 echo finished
