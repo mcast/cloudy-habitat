@@ -9,6 +9,11 @@ libyaml-perl
 
 dc
 units
+xdiskusage
 
 emacs
 emacs25-el-
+
+
+# kernel-package brings in textlive, around 700MiB
+kernel-package-
