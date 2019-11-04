@@ -20,6 +20,13 @@ esac
 
 cd -P "$( dirname "$0" )"
 
+if [ "$( whoami )" = 'root' ]; then
+    echo Run $0 as the normal user who has sudo permission, not as root >&2
+    # Could be fixed, but this is easier.
+    # Failure symptom: ./start.sh runs as root and leaves root-owned files
+    exit 1
+fi
+
 if [ -f sudo-ok ]; then
     echo already marked with $PWD/sudo-ok file
 else
@@ -39,7 +46,8 @@ fi
 _deb_style() {
     set -x
     sudo apt update
-    sudo apt install aptitude
+    sudo apt install -y aptitude
+    # below: may require consideration of unmet dependency solutions and other prompts
     sudo aptitude install $( grep -hvE '^#' "$@" )
     set +x
 }
