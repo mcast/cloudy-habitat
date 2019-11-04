@@ -17,6 +17,7 @@ _do() {
 
 script_dir="$( dirname "$0" )"
 vmname=pettle-tmp
+image=bionic-WTSI-docker_b5612
 
 # how mca sets up his openstack
 unset http_proxy
@@ -30,7 +31,7 @@ unset PYTHONPATH
 if vm_create="$(
 
 _do openstack server create \
-	  --image bionic-WTSI-docker_b5612 --flavor o2.medium --key-name mca-eta \
+	  --image $image --flavor o2.medium --key-name mca-eta \
 	  $( _kvp --security-group cloudforms_local_in cloudforms_web_in default cloudforms_ext_in cloudforms_ssh_in ) \
 	  --network casm-general-shared \
 	  --format json \
