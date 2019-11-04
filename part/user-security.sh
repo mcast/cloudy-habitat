@@ -9,15 +9,9 @@
 set -e
 set -o pipefail
 
-# dup: cloud-init.sh
-if [ $( ls -1 /home | wc -l ) != 1 ]; then
-    echo Cannot guess my less-privileged user name from /home contents
-    exit 1
-fi
-luser=$( ls -1 /home | head -n1 )
-echo Seeing one less-privileged user named $luser
-
-if ![ "$1" = '--destroy-luser-and-homedir' ]; then
+if [ "$1" = '--destroy-luser-and-homedir' ]; then
+    luser=$2
+else
     echo Safety catch was not disengaged >&2
     exit 1
 fi
