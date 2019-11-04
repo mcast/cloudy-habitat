@@ -38,6 +38,13 @@ mkdir -p "$HOME/$GH_REPO_DIR"
     fi
 )
 
+# move this proj down to GH_REPO_DIR
+new_ch_dir="$HOME/$GH_REPO_DIR/cloudy-habitat"
+if [ "$( pwd )" != "$new_ch_dir" ]; then
+    mv -v "$( pwd )" "$new_ch_dir"
+    cd "$new_ch_dir"
+fi
+
 # TODO: ugh, this looks like a mini version control system
 for f in ~/.bashrc; do
     have=$( md5sum "$f" | cut -d' ' -f1 )
