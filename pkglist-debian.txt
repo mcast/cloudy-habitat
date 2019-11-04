@@ -13,6 +13,7 @@ xdiskusage
 
 emacs
 emacs25-el-
+ecryptfs-utils
 
 
 # kernel-package brings in textlive, around 700MiB

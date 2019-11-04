@@ -58,4 +58,9 @@ if which docker >/dev/null && ping -c1 -l2 cgpbar.internal.sanger.ac.uk >/dev/nu
 fi
 
 echo $PATH | grep -q ~/bin || printf "\nPATH update needed in this shell,\n    %s\n\n" "PATH=~/bin:$PATH"
+
+if ! [ -d "$HOME/.Private" ] && which ecryptfs-setup-private > /dev/null; then
+    printf "\necryptfs-utils: activate with\n  ecryptfs-setup-private --wrapping\n\n"
+fi
+
 echo finished
