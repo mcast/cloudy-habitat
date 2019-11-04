@@ -19,7 +19,7 @@ fetch_proj() {
 fetch_proj
 
 # replace the default user
-/home/$luser/cloudy-habitat/part/user-security.sh
+/home/$luser/cloudy-habitat/part/user-security.sh --destroy-luser-and-homedir
 
 # fetch again, we destroyed the previous copy
 fetch_proj
