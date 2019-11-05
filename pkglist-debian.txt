@@ -11,6 +11,7 @@ dc
 units
 xdiskusage
 
+x11-apps
 emacs
 emacs25-el-
 ecryptfs-utils
