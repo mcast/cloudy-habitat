@@ -43,6 +43,13 @@ else
     fi
 fi
 
+
+if ping -c1 -l2 cgpbar.internal.sanger.ac.uk >/dev/null; then
+    # Get local cacert
+    sudo ./part/wtsi-install-ca-cert.sh
+fi
+
+
 _deb_style() {
     set -x
     sudo apt update
