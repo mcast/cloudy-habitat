@@ -44,12 +44,6 @@ else
 fi
 
 
-if ping -c1 -l2 cgpbar.internal.sanger.ac.uk >/dev/null; then
-    # Get local cacert
-    sudo ./part/wtsi-install-ca-cert.sh
-fi
-
-
 _deb_style() {
     set -x
     sudo apt update
@@ -69,6 +63,17 @@ case $( lsb_release -si || uname || echo unknown ) in
 	exit 1
 	;;
 esac
+
+
+if ping -c1 -l2 cgpbar.internal.sanger.ac.uk >/dev/null; then
+    # Get local cacert
+    sudo ./part/wtsi-install-ca-cert.sh
+
+    if which docker >/dev/null; then
+        # Internal machine, with docker
+        ./part/docker-wtsi-openstack.sh
+    fi
+fi
 
 echo
 echo proceed to next stage
