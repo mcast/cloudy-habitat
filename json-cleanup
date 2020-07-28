@@ -1,0 +1,24 @@
+#! /usr/bin/perl
+
+if (eval "use JSON; 1") {
+  local $/;
+  my $txt = <STDIN>;
+  $txt =~ s{'\n}{'\\n}g;
+## fix for malformed JSON of this form
+#   "progress": 0,
+#   "project_id": "62bc07f...",
+#   "properties": "",
+#   "security_groups": "name='cloudforms_local_in'
+# name='cloudforms_web_in'
+# name='default'
+# name='cloudforms_ext_in'
+# name='cloudforms_ssh_in'",
+#   "status": "ACTIVE",
+#   "updated": "2020-07-27T16:42:13Z",
+  my $d = JSON->new->relaxed(1)->decode($txt);
+  print JSON->new->encode($d);
+  print "\n";
+} else {
+  warn "'use JSON' failed: $@\n$0: Hobbling on in pass-through mode\n";
+  exec 'cat';
+}
