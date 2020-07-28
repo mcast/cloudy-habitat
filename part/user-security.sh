@@ -17,11 +17,12 @@ else
 fi
 
 AUTHK=/home/$luser/.ssh/authorized_keys
-NEWUSER=$( perl -pe '
+NEWUSER=$( perl -ne '
  next if /^\s*(#|$)/;
  next if / Generated-by-Nova\b/;
  s{^(.+?\s+)?ssh-\w+\s+\S{64,}\s+}{};
  s{(@|\s+).*}{};
+ print;
 ' $AUTHK | head -n1 )
 echo Create non-default user $NEWUSER based on $AUTHK
 
