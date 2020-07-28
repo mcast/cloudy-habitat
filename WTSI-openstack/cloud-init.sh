@@ -2,6 +2,8 @@
 
 set -e
 
+printf "here: in \$0=%s at PWD=%s with SHLVL=%s as user=%s\n" "$0" "$( pwd )" "$SHLVL" "$( whoami )"
+
 if [ $( ls -1 /home | wc -l ) != 1 ]; then
     echo Cannot guess my less-privileged user name from /home contents
     exit 1

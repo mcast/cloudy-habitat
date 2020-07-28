@@ -17,7 +17,12 @@ else
 fi
 
 AUTHK=/home/$luser/.ssh/authorized_keys
-NEWUSER=$( perl -pe 'next if /^\s*(#|$)/; s{^(.+?\s+)?ssh-\w+\s+\S{64,}\s+}{}; s{(@|\s+).*}{}' $AUTHK | head -n1 )
+NEWUSER=$( perl -pe '
+ next if /^\s*(#|$)/;
+ next if / Generated-by-Nova\b/;
+ s{^(.+?\s+)?ssh-\w+\s+\S{64,}\s+}{};
+ s{(@|\s+).*}{};
+' $AUTHK | head -n1 )
 echo Create non-default user $NEWUSER based on $AUTHK
 
 if [ "$NEWUSER" = "$luser" ]; then
