@@ -49,6 +49,7 @@ _deb_style() {
     sudo apt update
     sudo apt install -y aptitude
     # below: may require consideration of unmet dependency solutions and other prompts
+    sudo aptitude upgrade
     sudo aptitude install $( grep -hvE '^#' "$@" )
     sudo aptitude clean
     set +x
