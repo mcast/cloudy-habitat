@@ -62,17 +62,17 @@ if [ -n "$vm_id" ]; then
     echo Have host id=$vm_id
     float_info="$( _do openstack floating ip list -f json )"
     floatip=$( echo "$float_info" | jq --raw-output 'map(select(.Port | not))[0]["Floating IP Address"]' )
-    if [ -n "$floatip" ]; then
-	_do openstack server add floating ip $vm_id $floatip
-	_do ssh-keygen -f ~/.ssh/known_hosts -R $floatip
-	printf "# not added - DIY\n  cat >> ~/.ssh/config\n\nHost %s\nHostname %s\nIdentityFile ~/.ssh/keypairs/%s\n\n" \
-	       "${vmname##${USER}-}" "$floatip" "$key_name"
-    else
-	echo Could not find a floating IP, will try to make one for next time
+    if [ -z "$floatip" ] || [ "$floatip" = 'null' ]; then
+	echo Could not find a floating IP, try to make one
 	floatnet_id=$( echo "$float_info" | jq '.[0]["Floating Network"]' )
-	openstack floating ip create -f json $floatnet_id
-	echo ...could go round again, did not bother
+	float_create_info="$( openstack floating ip create -f json $floatnet_id )"
+	floatip=$( echo "$float_create_info" | jq --raw-output .floating_ip_address )
+	echo Made $floatip
     fi
+    _do openstack server add floating ip $vm_id $floatip
+    _do ssh-keygen -f ~/.ssh/known_hosts -R $floatip
+    printf "# not added - DIY\n  cat >> ~/.ssh/config\n\nHost %s\nHostname %s\nIdentityFile ~/.ssh/keypairs/%s\n\n" \
+	   "${vmname##${USER}-}" "$floatip" "$key_name"
 else
     echo did not see vm id
 fi
