@@ -38,8 +38,8 @@ _do() {
     )
 }
 
-if ! [ -f "~/.ssh/keypairs/$key_name" ]; then
-    echo "~/.ssh/keypairs/$key_name: private key not where I expected" >&2
+if ! [ -f ~/".ssh/keypairs/$key_name" ]; then
+    echo ~/".ssh/keypairs/$key_name: private key not where I expected" >&2
     exit 2
 fi
 
