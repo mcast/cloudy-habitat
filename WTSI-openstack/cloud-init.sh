@@ -16,7 +16,7 @@ fetch_proj() {
     su -c '
  echo here in $PWD at $( date ) as $( whoami )
  cd
- git clone https://github.com/mcast/cloudy-habitat
+ [ -d cloudy-habitat ] || git clone https://github.com/mcast/cloudy-habitat
 ' $luser
 }
 
