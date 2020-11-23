@@ -43,9 +43,9 @@ if NEWUSER_ldap_home=$( _user_homedir $NEWUSER ) && ! [ -d $NEWUSER_ldap_home ];
     echo "Homedir $NEWUSER_ldap_home does not, but $NEWUSER does exist (LDAP?)"
     sudo mkdir -p $NEWUSER_ldap_home
     sudo rmdir    $NEWUSER_ldap_home
-    sudo cp -a /etc/skel /home/$NEWUSER
-    sudo chown -R $NEWUSER:$( id -n -g $luser ) $NEWUSER_ldap_home
+    sudo cp -a /etc/skel $NEWUSER_ldap_home
     sudo ln -s $NEWUSER_ldap_home /home/$NEWUSER
+    sudo chown -R $NEWUSER:$( id -n -g $luser ) $NEWUSER_ldap_home
 elif ! _in_etc_passwd $NEWUSER; then
     echo Set up new local user $NEWUSER
     sudo adduser --ingroup $( id -n -g $luser ) --disabled-password --gecos '' $NEWUSER
