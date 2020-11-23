@@ -31,9 +31,26 @@ if [ "$NEWUSER" = "$luser" ]; then
     exit 0
 fi
 
+_in_etc_passwd() {
+    grep -qE ^$1: /etc/passwd
+}
 
-# set up new user
-sudo adduser --ingroup $( id -n -g $luser ) --disabled-password --gecos '' $NEWUSER
+_user_homedir() {
+    perl -e 'my $u=shift(); my @u=getpwnam($u) or die "user $u not found\n"; print $u[7]' $1
+}
+
+if NEWUSER_ldap_home=$( _user_homedir $NEWUSER ) && ! [ -d $NEWUSER_ldap_home ]; then
+    echo "Homedir $NEWUSER_ldap_home does not, but $NEWUSER does exist (LDAP?)"
+    sudo mkdir -p $NEWUSER_ldap_home
+    sudo rmdir    $NEWUSER_ldap_home
+    sudo cp -a /etc/skel /home/$NEWUSER
+    sudo chown -R $NEWUSER:$( id -n -g $luser ) $NEWUSER_ldap_home
+    sudo ln -s $NEWUSER_ldap_home /home/$NEWUSER
+elif ! _in_etc_passwd $NEWUSER; then
+    echo Set up new local user $NEWUSER
+    sudo adduser --ingroup $( id -n -g $luser ) --disabled-password --gecos '' $NEWUSER
+fi
+
 for gid in $( id -n -G $luser ); do
     sudo adduser $NEWUSER $gid
 done
@@ -47,3 +64,5 @@ echo "$NEWUSER ALL=(ALL) NOPASSWD:ALL" | sudo dd of=/etc/sudoers.d/90-cloud-init
 
 ### block attachement of new Key Pairs through the Horizon interface
 deluser --remove-home ubuntu
+
+# continues in cloud-init.sh with another fetch_proj
