@@ -1,17 +1,13 @@
 #! /bin/sh
 
-vmname=mca-pettle-dev
+vmname=mca-irods-nonci
 
 key_name=mca-eta
-
-openrc=$HOME/openrc/eta-casm-general-openrc.sh
-network=casm-general-shared
-image=bionic-WTSI-docker_b5612
-image=bionic-WTSI-docker_a4a2de-raw
 
 openrc=$HOME/openrc/theta-casm-general-openrc.sh
 network=cloudforms_network
 image=bionic-WTSI-docker_49930_38ab07e9
+image=bionic-WTSI-irodsclient_55347_08487c1f
 
 OS_NOISY=1
 
