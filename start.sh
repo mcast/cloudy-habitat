@@ -24,6 +24,9 @@ cd -P "$( dirname "$0" )"
 
 [ -d .git ] || exec ./part/gitify.sh
 
+mkdir -pv -m 0700 ~/.ssh
+[ -f ~/.ssh/config ] || cp -av part/ssh.config ~/.ssh/config
+
 mkdir -p ~/bin
 
 GH_REPO_DIR="$( grep GH_REPO_DIR constants.txt | cut -f2 )"
