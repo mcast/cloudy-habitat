@@ -69,7 +69,7 @@ if deluser --remove-home ubuntu; then
     echo deluser OK
 else
     echo deluser return exit code $?, partial failure?
-    if -d /home/ubuntu; then
+    if [ -d /home/ubuntu ]; then
 	sudo mv -vf /home/ubuntu /home/ubuntu~deleteme~
     fi
 fi
