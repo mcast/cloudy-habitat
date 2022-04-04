@@ -63,6 +63,15 @@ echo "$NEWUSER ALL=(ALL) NOPASSWD:ALL" | sudo dd of=/etc/sudoers.d/90-cloud-init
 # replace existing file made by openstack --> original user ubuntu has no password, can no longer sudo!
 
 ### block attachement of new Key Pairs through the Horizon interface
-deluser --remove-home ubuntu
+(date; ps auxf) > /tmp/ps-auxf.txt
+# process running as the user may cause exit code 8, on (?)newer versions
+if deluser --remove-home ubuntu; then
+    echo deluser OK
+else
+    echo deluser return exit code $?, partial failure?
+    if -d /home/ubuntu; then
+	sudo mv -vf /home/ubuntu /home/ubuntu~deleteme~
+    fi
+fi
 
 # continues in cloud-init.sh with another fetch_proj
