@@ -13,7 +13,7 @@ xdiskusage
 
 x11-apps
 emacs
-emacs25-el-
+emacs-el-
 ecryptfs-utils
 
 
